@@ -104,11 +104,15 @@ class TamaraCredential {
   ///* If `true` it capture the full amount of order automatically after successful payment
   late bool captureOrder;
 
+  ///* change the month installment in tamara the default value is 4 months
+  late int installment;
+
   TamaraCredential({
     required this.token,
     required this.merchantUrl,
     this.authoriseOrder = true,
     this.captureOrder = false,
+    this.installment = 4,
   });
 
   TamaraCredential.fromJson(Map<String, dynamic> json) {
@@ -116,6 +120,7 @@ class TamaraCredential {
     merchantUrl = MerchantUrl.fromJson(json['merchantUrl']);
     authoriseOrder = json['authoriseOrder'];
     captureOrder = json['captureOrder'];
+    installment = json['installment'];
   }
 
   Map<String, dynamic> toJson() {
@@ -124,6 +129,7 @@ class TamaraCredential {
     data['merchantUrl'] = merchantUrl.toJson();
     data['authoriseOrder'] = authoriseOrder;
     data['captureOrder'] = captureOrder;
+    data['installment'] = installment;
     return data;
   }
 }

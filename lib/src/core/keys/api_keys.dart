@@ -20,6 +20,7 @@ class ApiKeys {
   static const String failedUrl = "$uniBaseURl/failed";
   static const String cancelUrl = "$uniBaseURl/cancelled";
   static String approved = "approved";
+
   static String get tamaraCheckoutUrl => "$tamaraBaseUrl/checkout";
 
   static Map<String, String> get tamaraHeaders => UniPayControllers
@@ -46,13 +47,14 @@ class ApiKeys {
   }
 
   ///* Web view options
-  static InAppWebViewGroupOptions webViewGroupOptions =
-      InAppWebViewGroupOptions(
-    crossPlatform: InAppWebViewOptions(
-        useShouldOverrideUrlLoading: true, cacheEnabled: false),
-    android: AndroidInAppWebViewOptions(disableDefaultErrorPage: true),
-    ios: IOSInAppWebViewOptions(
-        applePayAPIEnabled: true, allowsInlineMediaPlayback: true),
+  ///
+  /// changed the in app view option to in app view setting
+  static InAppWebViewSettings webViewGroupOptions = InAppWebViewSettings(
+    useShouldOverrideUrlLoading: true,
+    cacheEnabled: false,
+    disableDefaultErrorPage: true,
+    applePayAPIEnabled: true,
+    allowsInlineMediaPlayback: true,
   );
 
   ///* Moyasar

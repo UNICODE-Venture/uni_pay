@@ -9,6 +9,7 @@ import '../../../../core/controllers/web_view_controller.dart';
 
 class TamaraSplitPlanWidget extends StatelessWidget {
   final WidgetData widgetData;
+
   const TamaraSplitPlanWidget({Key? key, required this.widgetData})
       : super(key: key);
 
@@ -17,7 +18,7 @@ class TamaraSplitPlanWidget extends StatelessWidget {
     ScreenSizes.init(context);
     UniPayText.isEnglish = widgetData.locale.isEnglish;
     return UniPaymentOptionWidget(
-      title: UniPayText.tamaraSplitBill,
+      title: UniPayText.tamaraSplitBill(widgetData.installment!),
       subTitle: UniPayText.tamaraSplitBillSubTitle,
       image: "tamara",
       currentStatus: widgetData.currentStatus,

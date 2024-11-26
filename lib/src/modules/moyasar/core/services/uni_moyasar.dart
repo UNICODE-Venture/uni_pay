@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http_client;
 import 'package:moyasar/moyasar.dart';
 import 'package:uni_pay/src/constant/uni_text.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 import 'package:uni_pay/uni_pay.dart';
-import 'package:http/http.dart' as http_client;
 
-import '../../../../core/keys/api_keys.dart';
 import '../../../../core/controllers/uni_pay_controller.dart';
+import '../../../../core/keys/api_keys.dart';
 import '../../../../utils/utils.dart';
 
 class UniPayMoyasarGateway {
@@ -46,8 +46,8 @@ class UniPayMoyasarGateway {
           }
           //* Apple pay
           else if (source is ApplePayPaymentResponseSource) {
-            transactionDetails.type = UniPayPaymentMethods.applepay;
-            transactionDetails.name = UniPayPaymentMethods.applepay.name;
+            transactionDetails.type = UniPayPaymentMethods.applePay;
+            transactionDetails.name = UniPayPaymentMethods.applePay.name;
             transactionDetails.cardType = UniPayCardType.mada;
             transactionDetails.cardNumber = source.number;
             transactionDetails.message = source.message ?? "";

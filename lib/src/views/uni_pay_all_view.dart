@@ -1,11 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 
 import '../../uni_pay.dart';
 import '../constant/uni_text.dart';
+import '../core/controllers/uni_pay_controller.dart';
 import '../modules/moyasar/views/moyasar_card_widget.dart';
 import '../modules/moyasar/views/uni_pay_moyasar_view.dart';
-import '../core/controllers/uni_pay_controller.dart';
 import 'design_system.dart';
 
 class UniPayGatewayView extends StatefulWidget {
@@ -39,11 +41,11 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                /// Apple Pay View
-                const UniApplePay(),
-
-                30.vs,
-
+                /// Apple Pay View if Platform is IOS
+                if (Platform.isIOS) ...[
+                  const UniApplePay(),
+                  30.vs,
+                ],
                 // Moyasar View
                 CardPaymentWidget(
                   widgetData: WidgetData(
@@ -59,6 +61,8 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
                   const Divider(),
                   TamaraSplitPlanWidget(
                     widgetData: WidgetData(
+                      installment: UniPayControllers
+                          .uniPayData.credentials.tamaraCredential?.installment,
                       currentStatus: uniPayPaymentMethods.isTamara,
                       locale: UniPayControllers.uniPayData.locale,
                       totalAmount: UniPayControllers
@@ -91,7 +95,7 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
                   isBottomBarButton: true,
                   isDisabled: uniPayPaymentMethods.isNotSpecified,
                   title:
-                      "${UniPayText.payNow} (${"${uniPayPaymentMethods.payNowAmount(transactionInfo.totalAmount)} ${transactionInfo.currency.currencyCode}"})",
+                      "${UniPayText.payNow} (${"${uniPayPaymentMethods.payNowAmount(transactionInfo.totalAmount, UniPayControllers.uniPayData.credentials.tamaraCredential?.installment)} ${transactionInfo.currency.currencyCode}"})",
                   onPressed: () {
                     // Go to Tamara view
                     if (uniPayPaymentMethods.isTamara) {

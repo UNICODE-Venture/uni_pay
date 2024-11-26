@@ -6,21 +6,21 @@ import 'package:uni_pay/src/utils/extension.dart';
 import '../constant/locale.dart';
 
 enum UniPayPaymentMethods {
-  applepay,
+  applePay,
   card,
-  stcpay,
+  stcPay,
   tamara,
   tabby,
   notSpecified;
 
   /// Check if the payment method is `ApplePay`
-  bool get isApplePay => this == UniPayPaymentMethods.applepay;
+  bool get isApplePay => this == UniPayPaymentMethods.applePay;
 
   /// Check if the payment method is `Card`
   bool get isCard => this == UniPayPaymentMethods.card;
 
   /// Check if the payment method is `STC Pay`
-  bool get isStcPay => this == UniPayPaymentMethods.stcpay;
+  bool get isStcPay => this == UniPayPaymentMethods.stcPay;
 
   /// Check if the payment method is `Tamara`
   bool get isTamara => this == UniPayPaymentMethods.tamara;
@@ -35,11 +35,11 @@ enum UniPayPaymentMethods {
   bool get isNotSpecified => this == UniPayPaymentMethods.notSpecified;
 
   /// Get the `pay now` amount by the type of payment method is selected
-  String payNowAmount(num totalAmount) {
+  String payNowAmount(num totalAmount, int? installmentDuration) {
     num amount = totalAmount;
     // Tamara is 3 installments
     if (isTamara) {
-      amount = totalAmount / 3;
+      amount = totalAmount / (installmentDuration ?? 4);
     } else if (isTabby) {
       amount = totalAmount / 4;
     }
@@ -139,6 +139,7 @@ enum UniPayEnvironment {
       : ApiKeys.tamaraBaseUrlForDev;
 
   String get tamaraCapturePayment => "$tamaraBaseUrl/payments/capture";
+
   String tamaraTransactionApi(String referenceId) =>
       "$tamaraBaseUrl/merchants/orders/reference-id/$referenceId";
 
@@ -155,9 +156,13 @@ enum UniPayStatus {
   notFound;
 
   bool get isSuccess => this == UniPayStatus.success;
+
   bool get isFailed => this == UniPayStatus.failed;
+
   bool get isCancelled => this == UniPayStatus.cancelled;
+
   bool get isNotSpecified => this == UniPayStatus.notSpecified;
+
   bool get isNotFound => this == UniPayStatus.notFound;
 }
 
@@ -172,10 +177,15 @@ enum UniPayCardType {
   notSpecified;
 
   bool get isMada => this == UniPayCardType.mada;
+
   bool get isVisa => this == UniPayCardType.visa;
+
   bool get isMastercard => this == UniPayCardType.mastercard;
+
   bool get isAmex => this == UniPayCardType.amex;
+
   bool get isTamara => this == UniPayCardType.tamara;
+
   bool get isNotSpecified => this == UniPayCardType.notSpecified;
 }
 
@@ -192,8 +202,11 @@ extension UniPayCountryExt on UniPayCountry {
 
 extension UniPayCurrentStateExt on UniPayCurrentState {
   bool get isLoading => this == UniPayCurrentState.loading;
+
   bool get isSuccess => this == UniPayCurrentState.success;
+
   bool get isFailed => this == UniPayCurrentState.failed;
+
   bool get isNotSpecified => this == UniPayCurrentState.notSpecified;
 }
 

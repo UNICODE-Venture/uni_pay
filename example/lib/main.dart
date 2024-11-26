@@ -74,7 +74,7 @@ UniPayData uniPayData = UniPayData(
     applePayMerchantIdentifier: "merchant.com.myapp.sa",
     paymentMethods: [
       UniPayPaymentMethods.card,
-      UniPayPaymentMethods.applepay,
+      UniPayPaymentMethods.applePay,
       UniPayPaymentMethods.tamara,
       UniPayPaymentMethods.tabby,
     ],
@@ -83,6 +83,7 @@ UniPayData uniPayData = UniPayData(
       secretKey: "sk_test",
     ),
     tamaraCredential: TamaraCredential(
+      installment: 3,
       token: "Bearer test",
       merchantUrl: MerchantUrl(notification: "https://my-app.com/webhook"),
     ),

@@ -46,9 +46,9 @@ class UniPayText {
       : "عذرًا ، فشل الدفع الخاص بك ، تأكد من أن لديك رصيدًا كافيًا في بطاقتك أو تم تمكين الدفع عبر الإنترنت لبطاقتك.";
 
   ///* Tamara ----------
-  static String get tamaraSplitBill => isEnglish
-      ? "Tamara: Split in 3, interest-free"
-      : "تمارا: قسم فاتورتك على 3 دفعات بدون فوائد";
+  static String tamaraSplitBill(int installment) => isEnglish
+      ? "Tamara: Split in $installment, interest-free"
+      : "تمارا: قسم فاتورتك على $installment دفعات بدون فوائد";
 
   static String get tamaraSplitBillSubTitle => isEnglish
       ? "Pay a fraction of your total now and the rest over time, No hidden fees, no interest!"
