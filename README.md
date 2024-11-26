@@ -43,6 +43,7 @@ Please have a look at our [/example](https://pub.dev/packages/uni_pay/example) p
           moyasarCredential:
               MoyasarCredential(publishableKey: "pk_key", secretKey: "sk_key"),
           tamaraCredential: TamaraCredential(
+            installment:4
             token: "Tamara_Token",
             merchantUrl:
                 MerchantUrl(notification: "https://my-app.com/webhook"),
