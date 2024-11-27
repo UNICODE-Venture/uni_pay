@@ -58,10 +58,10 @@ extension StringExt on String {
     switch (this) {
       case "creditcard":
         return UniPayPaymentMethods.card;
-      case "applepay":
-        return UniPayPaymentMethods.applepay;
-      case "stcpay":
-        return UniPayPaymentMethods.stcpay;
+      case "applePay":
+        return UniPayPaymentMethods.applePay;
+      case "stcPay":
+        return UniPayPaymentMethods.stcPay;
       case "tamara":
         return UniPayPaymentMethods.tamara;
       default:
