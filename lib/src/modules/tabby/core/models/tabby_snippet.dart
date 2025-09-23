@@ -23,6 +23,9 @@ class TabbySnippet extends TabbyCredential {
   /// Installment count, default is `4`
   final int installmentCount;
 
+  /// Environment of Tabby, default is `UniPayEnvironment.production`
+  final UniPayEnvironment environment;
+
   TabbySnippet({
     required this.totalAmountWithVat,
     this.currency = UniPayCurrency.sar,
@@ -33,6 +36,7 @@ class TabbySnippet extends TabbyCredential {
     super.merchantCode = "sa",
     super.psKey = "",
     this.installmentCount = 4,
+    this.environment = UniPayEnvironment.production,
     super.merchantUrl,
     Key? key,
   });

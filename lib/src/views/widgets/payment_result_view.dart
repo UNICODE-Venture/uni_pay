@@ -38,7 +38,10 @@ class _PaymentResultViewState extends State<PaymentResultView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: UniPayDesignSystem.appBar(title: UniPayText.paymentStatus),
+        appBar: UniPayDesignSystem.appBar(
+          leading: Container(),
+          title: UniPayText.paymentStatus,
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,9 +51,7 @@ class _PaymentResultViewState extends State<PaymentResultView> {
               width: 100.w,
               height: 40.h,
               child: lottieComposition != null
-                  ? Lottie(
-                      composition: lottieComposition,
-                    )
+                  ? Lottie(composition: lottieComposition)
                   : const CircularProgressIndicator.adaptive(),
             ),
             SizedBox(height: 8.h),

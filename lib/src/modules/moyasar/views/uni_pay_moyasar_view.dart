@@ -9,8 +9,8 @@ import '../../applepay/uni_apple_pay.dart';
 import '../core/services/uni_moyasar.dart';
 
 class UniPayCard extends StatefulWidget {
-  const UniPayCard({Key? key}) : super(key: key);
-
+  const UniPayCard({Key? key, this.isFromRoot = true}) : super(key: key);
+  final bool isFromRoot;
   @override
   State<UniPayCard> createState() => _UniPayCardState();
 }
@@ -19,7 +19,8 @@ class _UniPayCardState extends State<UniPayCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UniPayDesignSystem.appBar(title: UniPayText.payWithCard),
+      appBar: UniPayDesignSystem.appBar(
+          title: UniPayText.payWithCard, isFromRoot: widget.isFromRoot),
       body: ListView(
         padding: EdgeInsets.all(20.rSp),
         children: [
@@ -35,8 +36,11 @@ class _UniPayCardState extends State<UniPayCard> {
                   : const Localization.ar(),
               config: ApiKeys.moyasarPaymentConfig,
               onPaymentResult: (r) =>
-                  UniPayMoyasarGateway.processMoyasarPayment(context,
-                      result: r),
+                  UniPayMoyasarGateway.processMoyasarPayment(
+                context,
+                result: r,
+                isFromRoot: widget.isFromRoot,
+              ),
             ),
           ),
         ],

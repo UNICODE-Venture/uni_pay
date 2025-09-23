@@ -66,15 +66,15 @@ class UniPayResponse {
     createdAt = json['created_at'] ?? "";
     invoiceId = json['order_number'] ?? "";
 
-    bool isSuccess = invoiceId.isNotEmpty &&
-        invoiceId == orderId &&
-        transactionId.isNotEmpty;
+    bool isSuccess = transactionId.isNotEmpty && transactionId == orderId;
 
     status = isSuccess ? UniPayStatus.success : UniPayStatus.notFound;
 
     errorMessage = "N/A";
     transactionDetails = UniPayTransactionDetails.fromTamara(
         json['order_reference_id'] ?? invoiceId);
+
+    metadata = json['additional_data'];
   }
 
   Map<String, dynamic> toMap() => {

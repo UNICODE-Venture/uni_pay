@@ -17,10 +17,14 @@ class UniPay extends StatefulWidget {
   ///* Uni Pay Data to be used for payment request
   final UniPayData uniPayData;
 
+  /// Child widget to be displayed in the UniPay view under the payment options
+  final Widget? child;
+
   const UniPay({
     Key? key,
     required this.context,
     required this.uniPayData,
+    this.child,
   }) : super(key: key);
 
   @override
@@ -45,7 +49,7 @@ class _UniPayState extends State<UniPay> {
       supportedLocales: LocalizationsData.supportLocale,
       theme: UniPayTheme.theme,
       locale: uniPayData.locale.currentLocale,
-      home: const UniPayViewHandler(),
+      home: UniPayViewHandler(child: widget.child),
     );
   }
 }

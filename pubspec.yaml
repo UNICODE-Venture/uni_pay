@@ -5,7 +5,7 @@
 
 name: uni_pay
 description: A comprehensive library for seamless online payments, integrating Moyasar (Card & Apple pay), Tamara, and Tabby payment gateways.
-version: 4.0.1
+version: 5.0.0
 repository: https://github.com/UNICODE-Venture/uni_pay
 homepage: https://github.com/UNICODE-Venture/uni_pay
 issue_tracker: https://github.com/UNICODE-Venture/uni_pay/issues
@@ -37,7 +37,8 @@ dependencies:
   lottie: ^3.1.2
 
   #* Tabby payment gateway
-  tabby_flutter_inapp_sdk: ^1.11.0
+  tabby_flutter_inapp_sdk_fork: ^1.11.1
+  # tabby_flutter_inapp_sdk: ^1.11.0
   # tabby_flutter_inapp_sdk:
   #   git: https://github.com/mohammadsaif19/tabby_flutter_inapp_sdk
 

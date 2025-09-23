@@ -33,7 +33,10 @@ class UniPayControllers {
 
     // Initialize Tabby SDK
     if (isInitTabbySdk && data.credentials.paymentMethods.isTabbyGateway) {
-      UniTabbyServices.initTabbySDK(data.credentials.tabbyCredential);
+      UniTabbyServices.initTabbySDK(
+        data.credentials.tabbyCredential,
+        env: data.environment.tabbyEnv,
+      );
     }
   }
 
@@ -66,6 +69,7 @@ class UniPayControllers {
     BuildContext context, {
     required UniPayResponse response,
     bool isFromApplePay = false,
+    bool isFromRootView = false,
   }) async {
     uniPayStatus = response.status;
 
@@ -75,7 +79,20 @@ class UniPayControllers {
       await Future.delayed(const Duration(seconds: 2));
 
       /// Pop the payment result view and go back to the previous screen
-      UniPayControllers.context.uniParentPop();
+      // UniPayControllers.context.uniParentPop();
+      // On success go back to the app screen
+
+      if (uniPayStatus.isSuccess) {
+        UniPayControllers.context.uniParentPop();
+      }
+      // On failed go back to the payment screen again!
+      else {
+        if (isFromRootView) {
+          UniPayControllers.context.uniParentPop();
+        } else {
+          uniStateKey.currentContext?.uniParentPop();
+        }
+      }
     }
 
     //* Success

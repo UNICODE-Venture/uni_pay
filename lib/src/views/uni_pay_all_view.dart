@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 
@@ -9,7 +11,9 @@ import '../core/controllers/uni_pay_controller.dart';
 import 'design_system.dart';
 
 class UniPayGatewayView extends StatefulWidget {
-  const UniPayGatewayView({Key? key}) : super(key: key);
+  /// Child widget to be displayed in the UniPay view under the payment options
+  final Widget? child;
+  const UniPayGatewayView({Key? key, this.child}) : super(key: key);
 
   @override
   State<UniPayGatewayView> createState() => _UniPayGatewayViewState();
@@ -19,7 +23,8 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UniPayDesignSystem.appBar(title: UniPayText.checkout),
+      appBar: UniPayDesignSystem.appBar(
+          title: UniPayText.checkout, isFromRoot: true),
       body: _allPaymentView(),
     );
   }
@@ -40,10 +45,10 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 /// Apple Pay View
-                const UniApplePay(),
-
-                30.vs,
-
+                if (Platform.isIOS && paymentMethods.isApplePay) ...[
+                  const UniApplePay(),
+                  30.vs,
+                ],
                 // Moyasar View
                 CardPaymentWidget(
                   widgetData: WidgetData(
@@ -84,6 +89,10 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
                     ),
                   ),
                 ],
+
+                // Child widget
+                if (widget.child != null) ...[widget.child!],
+
                 const Spacer(),
 
                 // Pay Now Button
@@ -95,15 +104,15 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
                   onPressed: () {
                     // Go to Tamara view
                     if (uniPayPaymentMethods.isTamara) {
-                      context.uniPush(const UniPayTamara());
+                      context.uniPush(const UniPayTamara(isFromRoot: false));
                     }
                     // Go to Tabby view
                     else if (uniPayPaymentMethods.isTabby) {
-                      context.uniPush(const UniPayTabby());
+                      context.uniPush(const UniPayTabby(isFromRoot: false));
                     }
                     // Go to Moyasar view
                     else if (uniPayPaymentMethods.isCard) {
-                      context.uniPush(const UniPayCard());
+                      context.uniPush(const UniPayCard(isFromRoot: false));
                     }
                   },
                 ),

@@ -109,7 +109,10 @@ class TamaraCredential {
     required this.merchantUrl,
     this.authoriseOrder = true,
     this.captureOrder = false,
-  });
+  }) : assert(
+            merchantUrl.success.isNotEmpty &&
+                merchantUrl.success != merchantUrl.failure,
+            "Tamara success and failure urls must be different");
 
   TamaraCredential.fromJson(Map<String, dynamic> json) {
     token = json['token'];

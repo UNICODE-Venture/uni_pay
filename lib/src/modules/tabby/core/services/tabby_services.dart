@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import 'package:tabby_flutter_inapp_sdk_fork/tabby_flutter_inapp_sdk_fork.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 import 'package:uni_pay/src/utils/utils.dart';
 import 'package:uni_pay/uni_pay.dart'
@@ -11,7 +11,8 @@ import 'package:uni_pay/uni_pay.dart'
         UniPayData,
         UniPayOrder,
         UniPayResponse,
-        UniPayStatus;
+        UniPayStatus,
+        UniPayPaymentMethods;
 
 import '../../../../core/controllers/uni_pay_controller.dart';
 import '../models/tabby_session.dart';
@@ -24,16 +25,27 @@ final _tabbyRepo = TabbyRepo();
 ///
 /// Such as: Initiate tabby payment, create session, capture payment, get transaction details, etc.
 class UniTabbyServices {
-  static TabbySDK? _tabbySdk;
+  static final TabbySDK _tabbySdk = TabbySDK();
+
+  /// Check if Tabby SDK is initialized
+  static bool get isSdkInitialized {
+    try {
+      return _tabbySdk.publicKey.isNotEmpty;
+    } catch (e) {
+      return false;
+    }
+  }
 
   /// Init Tabby SDK to prepare for payment
-  static void initTabbySDK(TabbyCredential? credentials) {
-    if (credentials != null && _tabbySdk == null) {
-      _tabbySdk = TabbySDK();
-      _tabbySdk?.setup(
-        withApiKey: credentials.psKey,
-        environment: Environment.production,
-      );
+  static void initTabbySDK(
+    TabbyCredential? credentials, {
+    Environment env = Environment.production,
+  }) {
+    if (credentials != null && !isSdkInitialized) {
+      _tabbySdk.setup(withApiKey: credentials.psKey, environment: env);
+      uniLog("✔ Tabby SDK initialized successfully");
+    } else {
+      uniLog("⚠ Tabby credentials not provided or SDK already initialized");
     }
   }
 
@@ -49,6 +61,7 @@ class UniTabbyServices {
       merchantCode: tabbySnippet.merchantCode,
       apiKey: tabbySnippet.psKey,
       installmentsCount: tabbySnippet.installmentCount,
+      environment: tabbySnippet.environment.tabbyEnv,
     );
     // return TabbyPresentationSnippet(
     //   price: tabbySnippet.totalAmountWithVat.formattedString,
@@ -77,18 +90,13 @@ class UniTabbyServices {
     UniPayCustomerInfo customer = uniPayData.customerInfo;
     TabbyCredential tabbyCredential = uniPayData.credentials.tabbyCredential!;
 
-    if (_tabbySdk == null) {
-      throw Exception(
-          "Call `UniPayServices.initUniPay()` before using this function to initialize the `UniPay` module.");
-    }
-
     try {
       TabbyCheckoutPayload tabbyCheckoutPayload = TabbyCheckoutPayload(
         merchantCode: tabbyCredential.merchantCode,
         lang: uniPayData.locale.tabbyLang,
         payment: Payment(
           description: order.description,
-          // meta: uniPayData.metaData,
+          meta: uniPayData.metaData,
           amount: order.transactionAmount.totalAmount.toString(),
           currency: order.transactionAmount.currency.tabbyCurrency,
           buyer: Buyer(
@@ -135,8 +143,7 @@ class UniTabbyServices {
           ),
         ),
       );
-      final sessionResult =
-          await _tabbySdk!.createSession(tabbyCheckoutPayload);
+      final sessionResult = await _tabbySdk.createSession(tabbyCheckoutPayload);
       TabbySessionData session = TabbySessionData(
         sessionId: sessionResult.sessionId,
         paymentId: sessionResult.paymentId,
@@ -152,17 +159,25 @@ class UniTabbyServices {
   }
 
   /// Process the Tabby payment
-  static Future processTabbyPayment(BuildContext context, UniPayStatus status,
-      {String? transactionId}) {
+  static Future processTabbyPayment(
+    BuildContext context,
+    UniPayStatus status, {
+    String? transactionId,
+    bool isFromRoot = true,
+  }) {
     UniPayResponse response = UniPayResponse(status: status);
 
     /// If payment is successful, then return the transaction ID
     if (status.isSuccess) {
+      response.transactionDetails.type = UniPayPaymentMethods.tabby;
       response.transactionId = transactionId ??
           "TABBY_TRXN_${UniPayControllers.uniPayData.orderInfo.orderId}}";
     }
-    return UniPayControllers.handlePaymentsResponseAndCallback(context,
-        response: response);
+    return UniPayControllers.handlePaymentsResponseAndCallback(
+      context,
+      response: response,
+      isFromRootView: isFromRoot,
+    );
   }
 
   /// Check the Pre-score result session, before proceeding with payment

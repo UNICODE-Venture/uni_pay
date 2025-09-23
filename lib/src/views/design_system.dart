@@ -1,11 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:uni_pay/src/core/controllers/uni_pay_controller.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 import 'package:uni_pay/src/utils/extension/size_extension.dart';
+import 'package:uni_pay/uni_pay.dart';
 
 import '../constant/uni_text.dart';
-import '../core/controllers/uni_pay_controller.dart';
 import '../theme/colors.dart';
 
 class UniPayDesignSystem {
@@ -15,13 +16,20 @@ class UniPayDesignSystem {
     Widget? leading,
     List<Widget> actions = const [],
     PreferredSizeWidget? bottom,
+    bool isFromRoot = false,
   }) =>
       AppBar(
         elevation: 0,
         leading: leading ??
             BackButton(
               color: UniPayColorsPalletes.black,
-              onPressed: () => UniPayControllers.context.uniPop(),
+              onPressed: () {
+                if (isFromRoot) {
+                  UniPayControllers.context.uniPop();
+                } else {
+                  uniStateKey.currentContext?.uniPop();
+                }
+              },
             ),
         flexibleSpace: GlassMorphism(
           sigmaVal: 5,

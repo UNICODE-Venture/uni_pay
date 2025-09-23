@@ -15,8 +15,12 @@ class UniPayMoyasarGateway {
   UniPayMoyasarGateway._();
 
   ///* Process the moyasar payment
-  static Future processMoyasarPayment(BuildContext context,
-      {required dynamic result, bool isFromApplePay = false}) async {
+  static Future processMoyasarPayment(
+    BuildContext context, {
+    required dynamic result,
+    bool isFromApplePay = false,
+    bool isFromRoot = true,
+  }) async {
     if (result is! PaymentCanceledError) {
       UniPayResponse uniPayResponse = UniPayResponse();
       if (result is PaymentResponse) {

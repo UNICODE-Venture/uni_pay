@@ -14,8 +14,8 @@ class UniPayTamara extends StatefulWidget {
   ///
   /// then kindly call `UniPayServices.initUniPay()` first before using this widget.
 
-  const UniPayTamara({Key? key}) : super(key: key);
-
+  const UniPayTamara({Key? key, this.isFromRoot = true}) : super(key: key);
+  final bool isFromRoot;
   @override
   State<UniPayTamara> createState() => _UniPayTamaraState();
 }
@@ -30,7 +30,8 @@ class _UniPayTamaraState extends State<UniPayTamara> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UniPayDesignSystem.appBar(title: UniPayText.checkoutByTamara),
+      appBar: UniPayDesignSystem.appBar(
+          title: UniPayText.checkoutByTamara, isFromRoot: widget.isFromRoot),
       body: ValueListenableBuilder(
         valueListenable: UniPayControllers.tamaraNotifier,
         builder: (_, status, __) {
@@ -51,14 +52,26 @@ class _UniPayTamaraState extends State<UniPayTamara> {
                 captureOrder: tamaraCredential.captureOrder,
               ),
               onPaymentSuccess: (order) {
-                UniTamara.processTamaraPayment(context, UniPayStatus.success,
-                    transactionId: order.orderId);
+                UniTamara.processTamaraPayment(
+                  context,
+                  UniPayStatus.success,
+                  transactionId: order.orderId,
+                  isFromRoot: widget.isFromRoot,
+                );
               },
               onPaymentFailed: () {
-                UniTamara.processTamaraPayment(context, UniPayStatus.failed);
+                UniTamara.processTamaraPayment(
+                  context,
+                  UniPayStatus.failed,
+                  isFromRoot: widget.isFromRoot,
+                );
               },
               onPaymentCanceled: () {
-                UniTamara.processTamaraPayment(context, UniPayStatus.cancelled);
+                UniTamara.processTamaraPayment(
+                  context,
+                  UniPayStatus.cancelled,
+                  isFromRoot: widget.isFromRoot,
+                );
               },
             );
           } else {

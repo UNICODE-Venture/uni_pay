@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import 'package:tabby_flutter_inapp_sdk_fork/tabby_flutter_inapp_sdk_fork.dart';
 import 'package:uni_pay/src/core/keys/api_keys.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 
@@ -139,8 +139,8 @@ enum UniPayEnvironment {
       : ApiKeys.tamaraBaseUrlForDev;
 
   String get tamaraCapturePayment => "$tamaraBaseUrl/payments/capture";
-  String tamaraTransactionApi(String referenceId) =>
-      "$tamaraBaseUrl/merchants/orders/reference-id/$referenceId";
+  String tamaraTransactionApi(String orderId) =>
+      "$tamaraBaseUrl/orders/$orderId";
 
   /// Get the tabby environment
   Environment get tabbyEnv =>

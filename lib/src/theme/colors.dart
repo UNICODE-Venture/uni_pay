@@ -18,6 +18,7 @@ class UniPayTheme {
   static String fontFamily = "IBMPlexSansArabic";
 
   static ThemeData theme = ThemeData(
+    scaffoldBackgroundColor: UniPayColorsPalletes.white,
     fontFamily: fontFamily,
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(

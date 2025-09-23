@@ -15,7 +15,7 @@ class ApiKeys {
   static String tamaraVerifyOrder = "$tamaraBaseUrl/orders";
 
   //* Merchant Urls
-  static const String uniBaseURl = "https://unicode-moyasar.web.app";
+  static const String uniBaseURl = "https://unicodesolutions.co";
   static const String successUrl = "$uniBaseURl/success";
   static const String failedUrl = "$uniBaseURl/failed";
   static const String cancelUrl = "$uniBaseURl/cancelled";
