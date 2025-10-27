@@ -12,8 +12,8 @@ Seamlessly integrate Moyasar (Cards, STC Pay, Apple Pay), Tamara, and Tabby in m
 - **Tabby - [Docs](https://api-docs.tabby.ai/)**
 - **stcpay - [Docs](https://docs.moyasar.com/guides/stc-pay/basic-integration)**
 
-<img src="https://raw.githubusercontent.com/UNICODE-Venture/uni_pay/main/assets/screenshots/v2/sc_ar.png" width=200, height=400 alt="UniPay by Mohammad Saiful Islam Saif"> 
-<img src="https://raw.githubusercontent.com/UNICODE-Venture/uni_pay/main/assets/screenshots/v2/sc_en.png" width=200, height=400 alt="UniPay by Mohammad Saiful Islam Saif">
+<img src="https://raw.githubusercontent.com/UNICODE-Venture/uni_pay/main/assets/screenshots/v2/sc_ar.png" width=220, height=400 alt="UniPay by Mohammad Saiful Islam Saif"> 
+<img src="https://raw.githubusercontent.com/UNICODE-Venture/uni_pay/main/assets/screenshots/v2/sc_en.png" width=220, height=400 alt="UniPay by Mohammad Saiful Islam Saif">
 
 ## Getting started
 
