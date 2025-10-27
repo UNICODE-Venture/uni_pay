@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:uni_pay/uni_pay.dart';
 
 import '../../utils/uni_enums.dart';
 import 'uni_credentials.dart';
+import 'uni_customer_history.dart';
 import 'uni_order.dart';
 import 'uni_pay_customer.dart';
 import 'uni_pay_res.dart';
@@ -39,8 +41,14 @@ class UniPayData {
   ///   "customer_name": "Mohammad Saif"
   /// }
   /// ```
-  /// - Currently supports only `Moyasar` and, `Tamara`, but [Tabby] will be added soon, insha'Allah.
+  /// - Currently supports all `Moyasar`, `Tamara`, and `Tabby`
   Map<String, dynamic>? metaData;
+
+  ///* Previous order history of the customer
+  late List<UniCustomerHistory> ordersHistory;
+
+  ///* Uni pay theme data
+  late UniPayThemeData uniPayThemeData;
 
   ///* Data constructor for `UniPayData` with required parameters and optional parameters
   UniPayData({
@@ -53,7 +61,9 @@ class UniPayData {
     required this.onPaymentSucess,
     required this.onPaymentFailed,
     this.metaData,
-  });
+    this.ordersHistory = const [],
+    UniPayThemeData? themeData,
+  }) : uniPayThemeData = themeData ?? UniPayThemeData();
 
   ///* Convert json into `UniPayData`
   UniPayData.fromJson(Map<String, dynamic> json) {

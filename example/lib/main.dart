@@ -62,15 +62,18 @@ class _PaymentViewState extends State<PaymentView> {
 /// UniPayData to be used for payment request, make sure to fill all the required fields properly.
 UniPayData uniPayData = UniPayData(
   appName: "UniPay",
-  locale: UniPayLocale.en,
+  locale: UniPayLocale.ar,
   customerInfo: UniPayCustomerInfo(
-    fullName: "Mohammad Saif",
-    email: "example@mail.com",
+    fullName: "Mohammad Saiful Islam Saif",
+    email: "contact@mohammadsaif.dev",
     phoneNumber: "+966555666777",
     address: UniPayAddress(
-      addressName: "KAFD Area, Al Ghadir, Riyadh, Saudi Arabia",
+      addressName: "KAFD Area, Al-Ghadir, Riyadh, Saudi Arabia",
       city: "Riyadh",
     ),
+  ),
+  themeData: UniPayThemeData(
+    uiType: UniPayUIType.modernWithAppBar,
   ),
   environment: UniPayEnvironment.development,
   credentials: UniPayCredentials(
@@ -94,6 +97,17 @@ UniPayData uniPayData = UniPayData(
       secretKey: "sk_test",
       merchantCode: "your_merchant_code",
       merchantUrl: MerchantUrl(notification: "https://my-app.com/webhook"),
+    ),
+    couponCredential: CouponCredential(
+      onCouponApplied: (coupon) async {
+        debugPrint("Coupon Applied: $coupon");
+
+        // Simulate a network call or coupon validation
+        await Future.delayed(const Duration(seconds: 3));
+
+        /// Return true if coupon is valid and applied successfully
+        return Future.value(true);
+      },
     ),
   ),
   orderInfo: UniPayOrder(

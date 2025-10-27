@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http_client;
 
 import '../../../../core/keys/api_keys.dart';
 import '../../../../core/controllers/uni_pay_controller.dart';
-import '../../../../utils/utils.dart';
 
 class UniPayMoyasarGateway {
   UniPayMoyasarGateway._();
@@ -24,7 +23,7 @@ class UniPayMoyasarGateway {
     if (result is! PaymentCanceledError) {
       UniPayResponse uniPayResponse = UniPayResponse();
       if (result is PaymentResponse) {
-        uniLog(result.status);
+        // uniLog(result.status);
         if (result.status == PaymentStatus.paid) {
           uniPayResponse.transactionId = result.id;
           uniPayResponse.amount = result.amount.halalaToAmount;
@@ -73,6 +72,7 @@ class UniPayMoyasarGateway {
         context,
         response: uniPayResponse,
         isFromApplePay: isFromApplePay,
+        paymentMethod: UniPayPaymentMethods.card,
       );
     }
   }

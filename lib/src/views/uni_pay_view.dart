@@ -42,6 +42,8 @@ class _UniPayState extends State<UniPay> {
   Widget build(BuildContext context) {
     final uniPayData = widget.uniPayData;
     UniPayText.isEnglish = uniPayData.locale.isEnglish;
+    UniPayColorsPalletes.primaryColor = uniPayData.uniPayThemeData.primaryColor;
+
     return MaterialApp(
       navigatorKey: uniStateKey,
       debugShowCheckedModeBanner: false,

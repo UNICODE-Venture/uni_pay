@@ -18,6 +18,12 @@ extension SizerExt on num {
 
   ///* Get the responsive `size` for fonts and spacing based on the scale and screen size
   double get rSp => _screenSizes.getRelativeSize(this);
+
+  ///* Horizontal space widget
+  Widget get hSpace => SizedBox(width: rw);
+
+  ///* Vertical space widget
+  Widget get vSpace => SizedBox(height: rh);
 }
 
 class ScreenSizes {

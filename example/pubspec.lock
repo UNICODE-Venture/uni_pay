@@ -622,10 +622,10 @@ packages:
     dependency: transitive
     description:
       name: tabby_flutter_inapp_sdk_fork
-      sha256: ab4c81cbc9e78b37f3da26d447d65d33b038dd8aab09e7e72100fbe876ed9389
+      sha256: "15d11c165762e363ac9c30301aa345b38d1665afb6fb391392ee20b51105c96f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.11.0"
+    version: "1.11.2"
   term_glyph:
     dependency: transitive
     description:
@@ -656,7 +656,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "4.0.1"
+    version: "5.1.0"
   uuid:
     dependency: transitive
     description:

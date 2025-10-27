@@ -48,7 +48,7 @@ class UniPaymentOptionWidget extends StatelessWidget {
             children: [
               //* Checkbox
               UniPayDesignSystem.checkBox(
-                activeColor: activeColor ?? UniPayColorsPalletes.black,
+                activeColor: activeColor ?? UniPayColorsPalletes.primaryColor,
                 status: currentStatus,
                 onChange: onChange,
               ),

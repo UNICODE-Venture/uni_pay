@@ -38,6 +38,12 @@ class UniPayControllers {
         env: data.environment.tabbyEnv,
       );
     }
+
+    // Coupon default visibility
+    if (data.credentials.couponCredential != null) {
+      toggleCouponFieldStatus(
+          data.credentials.couponCredential!.isCouponFieldDefaultOpen);
+    }
   }
 
   ///* Initialize Tamara all payment methods
@@ -70,12 +76,14 @@ class UniPayControllers {
     required UniPayResponse response,
     bool isFromApplePay = false,
     bool isFromRootView = false,
+    required UniPayPaymentMethods paymentMethod,
   }) async {
     uniPayStatus = response.status;
 
     if (!isFromApplePay) {
       // Navigate to payment result view
-      context.uniPushReplacement(const PaymentResultView());
+      context
+          .uniPushReplacement(PaymentResultView(paymentMethod: paymentMethod));
       await Future.delayed(const Duration(seconds: 2));
 
       /// Pop the payment result view and go back to the previous screen
@@ -131,5 +139,16 @@ class UniPayControllers {
         ? UniPayCurrentState.success
         : UniPayCurrentState.failed;
     return tabbySession;
+  }
+
+  // ------------- Coupon Code Management ------------- //
+  static final couponTextController = TextEditingController();
+  static ValueNotifier<bool> isCouponFieldVisible = ValueNotifier(false);
+
+  ///  Change coupon field visibility
+  static toggleCouponFieldStatus(bool isDefaultOpn) {
+    if (isCouponFieldVisible.value != isDefaultOpn) {
+      isCouponFieldVisible.value = isDefaultOpn;
+    }
   }
 }

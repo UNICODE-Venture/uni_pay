@@ -26,7 +26,7 @@ class UniPayText {
 
   static String get tabbyErrorMsg => isEnglish
       ? "Your payment request has been declined by Tabby, kindly try again later."
-      : "تم رفض طلب الدفع الخاص بك من قبل Tabby ، يرجى المحاولة مرة أخرى في وقت لاحق.";
+      : "تم رفض طلب الدفع الخاص بك من قبل تابي ، يرجى المحاولة مرة أخرى في وقت لاحق.";
 
   static String pleaseProvideCredentials =
       "Please provide payment gateway secret credentials to proceed the payment";
@@ -87,4 +87,48 @@ class UniPayText {
   static String get tamaraCheckoutTitle => isEnglish
       ? "Split in 3 payments - No late fees, Sharia compliant"
       : "قسمها على 3 دفعات - بدون رسوم تأخير، متوافقة مع الشريعة الإسلامية";
+
+  static String get paymentCancelled => isEnglish
+      ? "You aborted the payment. Please retry or choose another payment method."
+      : "لقد ألغيت الدفعة. فضلاً حاول مجددًا أو اختر طريقة دفع أخرى.";
+
+  static String get paymentFailedByTabby => isEnglish
+      ? "Sorry, Tabby is unable to approve this purchase. Please use an alternative payment method for your order."
+      : "نأسف، تابي غير قادرة على الموافقة على هذه العملية. الرجاء استخدام طريقة دفع أخرى.";
+
+  static String get paymentFailedByTamara => isEnglish
+      ? "Sorry, Tamara is unable to approve this purchase. Please use an alternative payment method for your order."
+      : "نأسف، تمارا غير قادرة على الموافقة على هذه العملية. الرجاء استخدام طريقة دفع أخرى.";
+
+  static String get paymentWasFailed => isEnglish
+      ? "Sorry, your payment was failed, make sure you have the enough balance on your card or the online payment is enabled for your card."
+      : "عذرًا ، فشل الدفع الخاص بك ، تأكد من أن لديك رصيدًا كافيًا في بطاقتك أو تم تمكين الدفع عبر الإنترنت لبطاقتك.";
+
+  //  ---------- Below are new updates v2 realted texts ---------- //
+  static String get yourPaymentMethod =>
+      isEnglish ? "Payment Methods" : "طريقة دفعك";
+
+  static String get selectYourPaymentMethod => isEnglish
+      ? "Select your preferred payment method"
+      : "حدد طريقة الدفع الافتراضية";
+
+  static String get creditCards =>
+      isEnglish ? "Credit or Debit Cards" : "بطاقة ائتمانية";
+
+  static String get applePay => isEnglish ? "Apple Pay" : "آبل باي";
+
+  static String get cardDataSecured => isEnglish
+      ? "Card data will not be stored, and 100% secured."
+      : "لن يتم الاحتفاظ ببيانات البطاقة ، آمنة بنسبة 100٪";
+  static String get doYouHaveCoupon =>
+      isEnglish ? "Do you have any coupon?" : "هل لديك كوبون خصم؟";
+  static String get enterCouponCodeHere =>
+      isEnglish ? "Enter the coupon code here..." : "اكتب كود الخصم هنا...";
+  static String get startToPay => isEnglish ? "Pay now" : "بدء الدفع الآن";
+
+  static String get payByStcPay => isEnglish
+      ? "STC Pay: Fast and secure digital wallet"
+      : "STC Pay: محفظة رقمية سريعة وآمنة";
+  static String get notSpecified => isEnglish ? "Not Specified" : "غير محدد";
+  static String get apply => isEnglish ? "Apply" : "تطبيق";
 }

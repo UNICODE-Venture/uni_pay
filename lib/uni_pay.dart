@@ -17,6 +17,7 @@ export 'src/core/models/uni_pay_data.dart';
 export 'src/core/models/uni_pay_res.dart';
 export 'src/core/models/uni_pay_item.dart';
 export 'src/core/models/widget_data.dart';
+export 'src/core/models/uni_customer_history.dart';
 
 // ------------------- Modules or payment gateways used to process the payment ------------------- //
 
@@ -58,6 +59,21 @@ export 'src/modules/tabby/core/models/tabby_dto.dart';
 export 'src/modules/tabby/views/tabby_pay_view.dart';
 export 'src/modules/tabby/views/widgets/tabbly_payment.dart';
 export 'src/modules/tabby/core/services/tabby_services.dart';
+
+// Credentials
+export 'src/core/models/credentials/uni_coupon_credential.dart';
+export 'src/core/models/credentials/uni_moyasar_credential.dart';
+export 'src/core/models/credentials/uni_tamara_credential.dart';
+export 'src/core/models/credentials//uni_merchant_url.dart';
+
+// Theme
+export 'src/core/models/theme/uni_pay_theme_data.dart';
+
+// Coupon Field
+export 'src/modules/global/widgets/coupon_field.dart';
+
+
+
 
 
 /// Controllers used to process the payment

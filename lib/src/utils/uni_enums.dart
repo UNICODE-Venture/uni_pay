@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabby_flutter_inapp_sdk_fork/tabby_flutter_inapp_sdk_fork.dart';
+import 'package:uni_pay/src/constant/path.dart';
+import 'package:uni_pay/src/constant/uni_text.dart';
 import 'package:uni_pay/src/core/keys/api_keys.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 
@@ -34,6 +36,9 @@ enum UniPayPaymentMethods {
   /// Check if the payment method is `NotSpecified`
   bool get isNotSpecified => this == UniPayPaymentMethods.notSpecified;
 
+  /// IS BNPL
+  bool get isBNPL => isTamara || isTabby;
+
   /// Get the `pay now` amount by the type of payment method is selected
   String payNowAmount(num totalAmount) {
     num amount = totalAmount;
@@ -45,6 +50,32 @@ enum UniPayPaymentMethods {
     }
     return amount.formattedString;
   }
+
+  /// Get the tabby payment method
+  OrderHistoryItemPaymentMethod get tabbyPaymentMethod => isNotSpecified
+      ? OrderHistoryItemPaymentMethod.cod
+      : OrderHistoryItemPaymentMethod.card;
+
+  /// Get the title by the payment method
+  String get title => switch (this) {
+        UniPayPaymentMethods.applepay => UniPayText.applePay,
+        UniPayPaymentMethods.card => UniPayText.creditCards,
+        UniPayPaymentMethods.stcpay => UniPayText.payByStcPay,
+        UniPayPaymentMethods.tamara => UniPayText.payByTamara,
+        UniPayPaymentMethods.tabby => UniPayText.tabbySplitBill,
+        UniPayPaymentMethods.notSpecified => UniPayText.notSpecified,
+      };
+
+  /// Get the icon asset by the payment method
+  String get icon => switch (this) {
+        UniPayPaymentMethods.applepay => "${UniAssetsPath.icons}/apple_pay.png",
+        UniPayPaymentMethods.card => "${UniAssetsPath.images}/credit_cards.png",
+        UniPayPaymentMethods.tabby => "${UniAssetsPath.images}/tabby.png",
+        UniPayPaymentMethods.tamara => "${UniAssetsPath.icons}/tamara-en.png",
+        UniPayPaymentMethods.stcpay ||
+        UniPayPaymentMethods.notSpecified =>
+          "${UniAssetsPath.images}/credit_cards.png",
+      };
 }
 
 enum UniPayLocale {
@@ -122,8 +153,6 @@ enum UniPayCurrency {
   }
 }
 
-enum UniPayItemType { product, service, notSpecified }
-
 enum UniPayEnvironment {
   production,
   development;
@@ -179,6 +208,21 @@ enum UniPayCardType {
   bool get isNotSpecified => this == UniPayCardType.notSpecified;
 }
 
+enum UniPayOrderStatus {
+  pending,
+  completed,
+  refunded,
+  cancelled;
+
+  /// Get the tabby order history
+  OrderHistoryItemStatus get tabbyOrderStatus => switch (this) {
+        UniPayOrderStatus.pending => OrderHistoryItemStatus.processing,
+        UniPayOrderStatus.completed => OrderHistoryItemStatus.complete,
+        UniPayOrderStatus.refunded => OrderHistoryItemStatus.refunded,
+        UniPayOrderStatus.cancelled => OrderHistoryItemStatus.canceled,
+      };
+}
+
 ///* Below section responsible  above enums extentions
 
 extension UniPayCountryExt on UniPayCountry {
@@ -212,4 +256,25 @@ extension UniPayPaymentMethodsExt on List<UniPayPaymentMethods> {
 
   /// Check if any of the payment methods is `stcpay`
   bool get isStcPay => any((t) => t.isStcPay);
+}
+
+enum UniPayUIType {
+  /// Legacy UI, from v1
+  legacy,
+
+  /// Modern UI from v2 new re-design
+  modern,
+
+  /// Modern UI from v2 new re-design with AppBar
+  modernWithAppBar;
+
+  /// Check if the UI type is `Legacy`
+  bool get isLegacy => this == UniPayUIType.legacy;
+
+  /// Check if the UI type is `Modern`
+  bool get isModernUI =>
+      this == UniPayUIType.modern || this == UniPayUIType.modernWithAppBar;
+
+  /// Check if the UI type is `Modern with AppBar`
+  bool get isModernWithAppBar => this == UniPayUIType.modernWithAppBar;
 }

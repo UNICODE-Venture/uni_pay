@@ -12,66 +12,87 @@ Seamlessly integrate Moyasar (Cards, STC Pay, Apple Pay), Tamara, and Tabby in m
 - **Tabby - [Docs](https://api-docs.tabby.ai/)**
 - **stcpay - [Docs](https://docs.moyasar.com/guides/stc-pay/basic-integration)**
 
-<img src="https://raw.githubusercontent.com/UNICODE-Venture/uni_pay/main/assets/screenshots/sc_ar.png" width=200, height=400 alt="UniPay Arabic by Saif"> 
-<img src="https://raw.githubusercontent.com/UNICODE-Venture/uni_pay/main/assets/screenshots/sc_en.png" width=200, height=400 alt="UniPay English by Saif">
+<img src="https://raw.githubusercontent.com/UNICODE-Venture/uni_pay/main/assets/screenshots/v2/sc_ar.png" width=200, height=400 alt="UniPay by Mohammad Saiful Islam Saif"> 
+<img src="https://raw.githubusercontent.com/UNICODE-Venture/uni_pay/main/assets/screenshots/v2/sc_en.png" width=200, height=400 alt="UniPay by Mohammad Saiful Islam Saif">
 
 ## Getting started
 
 Please have a look at our [/example](https://pub.dev/packages/uni_pay/example) project for a better understanding of implementations.
 
 ```dart
-   UniPay(
-      uniPayData: UniPayData(
-        appName: "UniPay",
-        locale: UniPayLocale.ar,
-        customerInfo: UniPayCustomerInfo(
-          fullName: "Mohammad Saif",
-          email: "example@mail.com",
-          phoneNumber: "+966555666777",
-          address: UniPayAddress(
-            addressName: "Olaya street, Al Ghadir",
-            city: "Riyadh",
-          ),
+   UniPayData(
+      appName = "UniPay",
+      locale = UniPayLocale.en,
+      customerInfo = UniPayCustomerInfo(
+        fullName: "Mohammad Saiful Islam Saif",
+        email: "contact@mohammadsaif.dev",
+        phoneNumber: "+966555666777",
+        address: UniPayAddress(
+          addressName: "KAFD Area, Al-Ghadir, Riyadh, Saudi Arabia",
+          city: "Riyadh",
         ),
-        environment: UniPayEnvironment.development,
-        credentials: UniPayCredentials(
-          applePayMerchantIdentifier: "merchant.com.mystore.sa",
-          paymentMethods: [
-            UniPayPaymentMethods.card,
-            UniPayPaymentMethods.applepay,
-            UniPayPaymentMethods.tamara,
-            UniPayPaymentMethods.tabby,
-
-          ],
-          moyasarCredential:
-              MoyasarCredential(publishableKey: "pk_key", secretKey: "sk_key"),
-          tamaraCredential: TamaraCredential(
-            token: "Tamara_Token",
-            merchantUrl:
-                MerchantUrl(notification: "https://my-app.com/webhook"),
-          ),
-          tabbyCredential: TabbyCredential(psKey: "tabby_api_key"),
-        ),
-        orderInfo: UniPayOrder(
-          transactionAmount: TransactionAmount(totalAmount: 150.55),
-          orderId: DateTime.now().millisecondsSinceEpoch.toString(),
-          description: "Test Order Description",
-          items: [
-            UniPayItem(
-                id: "Product_ID", name: "Product name", quantity: 1, price: 50)
-          ],
-        ),
-        onPaymentSucess: (res) {
-          debugPrint("Payment Success ----> ${res.toMap()}");
-        },
-        onPaymentFailed: (res) {
-          debugPrint("Payment Failed ----> ${res.toMap()}");
-        },
-        metaData: {
-          "customer_uid": "ABC_12345",
-          "customer_name": "Saif",
-        }
       ),
+      themeData = UniPayThemeData(
+        uiType: UniPayUIType.modernWithAppBar,
+      ),
+      environment = UniPayEnvironment.development,
+      credentials = UniPayCredentials(
+        applePayMerchantIdentifier: "merchant.com.myapp.sa",
+        paymentMethods: [
+          UniPayPaymentMethods.card,
+          UniPayPaymentMethods.applepay,
+          UniPayPaymentMethods.tamara,
+          UniPayPaymentMethods.tabby,
+        ],
+        moyasarCredential: MoyasarCredential(
+          publishableKey: "pk_test",
+          secretKey: "sk_live",
+        ),
+        tamaraCredential: TamaraCredential(
+          token: "Bearer test_12345",
+          merchantUrl: MerchantUrl(notification: "https://my-app.com/webhook"),
+        ),
+        tabbyCredential: TabbyCredential(
+          psKey: "pk_test",
+          secretKey: "sk_test",
+          merchantCode: "your_merchant_code",
+          merchantUrl: MerchantUrl(notification: "https://my-app.com/webhook"),
+        ),
+        couponCredential: CouponCredential(
+          onCouponApplied: (coupon) async {
+            debugPrint("Coupon Applied: $coupon");
+
+            // Simulate a network call or coupon validation
+            await Future.delayed(const Duration(seconds: 3));
+
+            /// Return true if coupon is valid and applied successfully
+            return Future.value(true);
+          },
+        ),
+      ),
+      orderInfo = UniPayOrder(
+        transactionAmount: TransactionAmount(totalAmount: 150.55),
+        orderId: DateTime.now().millisecondsSinceEpoch.toString(),
+        description: "Test Order Description",
+        items: [
+          UniPayItem(
+            id: "Product_ID",
+            name: "Product name",
+            quantity: 1,
+            price: 50,
+          )
+        ],
+      ),
+      onPaymentSucess = (res) {
+        debugPrint("Payment Success ----> ${res.toMap()}");
+      },
+      onPaymentFailed = (res) {
+        debugPrint("Payment Failed ----> ${res.toMap()}");
+      },
+      metaData = {
+        "customer_uid": "ABC_12345",
+        "customer_name": "Mohammad Saiful Islam Saif",
+      },
     )
 ```
 

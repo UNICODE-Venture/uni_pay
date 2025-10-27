@@ -35,7 +35,7 @@ class UniTamara {
       items: order.items
           .map((item) => Items(
                 referenceId: item.id,
-                type: item.itemType.name,
+                type: item.itemType,
                 name: item.name,
                 sku: item.sku,
                 quantity: item.quantity,
@@ -123,6 +123,7 @@ class UniTamara {
       context,
       response: response,
       isFromRootView: isFromRoot,
+      paymentMethod: UniPayPaymentMethods.tamara,
     );
     // //* Cancelled
     // else if (status.isCancelled) {

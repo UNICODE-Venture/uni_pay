@@ -1,5 +1,3 @@
-import '../../utils/uni_enums.dart';
-
 class UniPayItem {
   ///* Item id
   late String id;
@@ -16,9 +14,8 @@ class UniPayItem {
   ///* Item SKU
   late String sku;
 
-  ///* Item Type
-
-  late UniPayItemType itemType;
+  ///* Item Type e.g. `service, product, cosmetic, electronics`
+  late String itemType;
 
   ///* All items total price
   num get totalPrice => price * quantity;
@@ -29,7 +26,7 @@ class UniPayItem {
     required this.quantity,
     required this.price,
     String? sku,
-    this.itemType = UniPayItemType.product,
+    this.itemType = "service",
   }) : sku = sku ?? id;
 
   UniPayItem.fromJson(Map<String, dynamic> json) {
@@ -38,7 +35,7 @@ class UniPayItem {
     quantity = json['quantity'];
     price = json['price'];
     sku = json['sku'];
-    itemType = UniPayItemType.values[json['itemType']];
+    itemType = json['itemType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,7 +45,7 @@ class UniPayItem {
     data['quantity'] = quantity;
     data['price'] = price;
     data['sku'] = sku;
-    data['itemType'] = itemType.index;
+    data['itemType'] = itemType;
     return data;
   }
 }

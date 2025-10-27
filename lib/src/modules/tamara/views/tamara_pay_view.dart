@@ -76,8 +76,8 @@ class _UniPayTamaraState extends State<UniPayTamara> {
             );
           } else {
             return UniPayDesignSystem.errorView(
-                title: tamaraCheckout.errorMessage,
-                subTitle: tamaraCheckout.errors);
+              title: UniPayText.paymentFailedByTamara,
+            );
           }
         },
       ),

@@ -1,10 +1,5 @@
 import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
-
-class Utils {
-  Utils._();
-}
 
 ///* Print shortcuts `print()`
 void uniPrint(dynamic data) {

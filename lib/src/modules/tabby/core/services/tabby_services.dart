@@ -99,17 +99,13 @@ class UniTabbyServices {
           meta: uniPayData.metaData,
           amount: order.transactionAmount.totalAmount.toString(),
           currency: order.transactionAmount.currency.tabbyCurrency,
-          buyer: Buyer(
-            // 'card.success@tabby.ai',
-            // '0500000001'
-            // 'otp.rejected@tabby.ai',
-            // '0500000002'
-            email: customer.email,
-            phone: customer.phoneNumber,
-            name: customer.fullName,
-          ),
+          // 'card.success@tabby.ai',
+          // '0500000001'
+          // 'otp.rejected@tabby.ai',
+          // '0500000002'
+          buyer: customer.tabbyBuyer,
           buyerHistory: BuyerHistory(
-            loyaltyLevel: 0,
+            loyaltyLevel: customer.loyaltyLevel,
             registeredSince: customer.joinedAtDate.toUtc().toIso8601String(),
             wishlistCount: 0,
           ),
@@ -119,28 +115,26 @@ class UniTabbyServices {
                 .map(
                   (item) => OrderItem(
                     title: item.name,
-                    description: item.itemType.name,
+                    description: item.itemType,
                     quantity: item.quantity,
                     unitPrice: item.totalPrice.formattedString,
                     referenceId: item.sku,
-                    category: item.itemType.name,
+                    category: item.itemType,
                   ),
                 )
                 .toList(),
           ),
-          orderHistory: [
-            // OrderHistoryItem(
-            //   purchasedAt: DateTime.now().toUtc().toIso8601String(),
-            //   amount: order.transactionAmount.totalAmount.formattedString,
-            //   paymentMethod: OrderHistoryItemPaymentMethod.card,
-            //   status: OrderHistoryItemStatus.newOne,
-            // )
-          ],
-          shippingAddress: ShippingAddress(
-            city: customer.address.city,
-            address: customer.address.addressName,
-            zip: customer.address.zipCode,
-          ),
+          orderHistory: uniPayData.ordersHistory
+              .map((o) => OrderHistoryItem(
+                    purchasedAt: o.orderDate.toUtc().toIso8601String(),
+                    amount: o.totalAmount.formattedString,
+                    paymentMethod: o.paymentMethod.tabbyPaymentMethod,
+                    status: o.orderStatus.tabbyOrderStatus,
+                    shippingAddress: customer.address.tabbyShippingAddress,
+                    buyer: customer.tabbyBuyer,
+                  ))
+              .toList(),
+          shippingAddress: customer.address.tabbyShippingAddress,
         ),
       );
       final sessionResult = await _tabbySdk.createSession(tabbyCheckoutPayload);
@@ -150,6 +144,7 @@ class UniTabbyServices {
         availableProducts: sessionResult.availableProducts,
         status: SessionStatus.created,
       );
+      // uniLog("✔ Tabby Payload: ${tabbyCheckoutPayload.toJson()}");
       uniLog("✔ Tabby Session: ${session.toString()}");
       return session;
     } on ServerException catch (e) {
@@ -177,6 +172,7 @@ class UniTabbyServices {
       context,
       response: response,
       isFromRootView: isFromRoot,
+      paymentMethod: UniPayPaymentMethods.tabby,
     );
   }
 

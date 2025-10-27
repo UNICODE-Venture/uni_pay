@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni_pay/src/modules/global/views/uni_pay_options_view.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 
 import '../../../uni_pay.dart';
@@ -58,6 +59,12 @@ class _UniPayViewHandlerState extends State<UniPayViewHandler> {
             !paymentMethods.isTabbyGateway)) {
       context.uniPushReplacement(const UniPayCard());
     }
+
+    // Case 4: Modern UI with all payment methods
+    else if (uniPayData.uniPayThemeData.uiType.isModernUI) {
+      context.uniPushReplacement(UniPayPaymentOptionsView(child: widget.child));
+    }
+
     // Case 4: All payment methods
     else {
       context.uniPushReplacement(UniPayGatewayView(child: widget.child));

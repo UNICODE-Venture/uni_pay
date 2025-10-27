@@ -1,4 +1,4 @@
-import '../../../../core/models/uni_credentials.dart';
+import 'package:uni_pay/uni_pay.dart';
 
 class TamaraData {
   late String orderReferenceId;
